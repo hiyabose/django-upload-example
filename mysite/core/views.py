@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
+from django.http import HttpResponse
+import joblib
+import numpy as np
 
 from .forms import BookForm
 from .models import Book
@@ -46,6 +49,30 @@ def delete_book(request, pk):
         book = Book.objects.get(pk=pk)
         book.delete()
     return redirect('book_list')
+
+
+def test(request):
+    return render(request,'test.html')
+
+def landing(request):
+    return render(request,'landing.html')
+
+
+def result(request):
+    reg = joblib.load('model.sav')
+
+    d1=float(request.GET['b'])
+    d2=float(request.GET['c'])
+    d3=float(request.GET['d'])
+    d4=float(request.GET['e'])
+   
+    arr = np.array(
+       [[d1,d2,d3,d4]]
+    )
+    
+    ans = reg.predict(arr)
+    return render(request,'result.html',{'ans':ans})
+
 
 
 class BookListView(ListView):

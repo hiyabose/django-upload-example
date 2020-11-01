@@ -1,0 +1,20 @@
+
+{% extends 'index.html'%}
+
+{% block content %}
+<div class="o" style ="background-color:#fc7703; color:black; width:1500; padding: 200px;">
+<center>
+  <h1>SIGN UP NOW !</h1>
+
+  <form method="POST">
+
+       {% csrf_token %}
+       {{form.as_p}}
+
+     <button>Sign Up</button>
+</form>
+</center>
+</div>
+{% endblock %}
+</body>
+</html>
